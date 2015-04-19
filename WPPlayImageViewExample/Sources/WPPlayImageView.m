@@ -56,7 +56,6 @@
 
 
 -(void)setImages:(NSArray *)images{
-#warning 注意此处 mutableCopy
     self.imagesM = [images mutableCopy];
 }
 
@@ -108,18 +107,36 @@
     }
     return _callBackM;
 }
+-(NSMutableArray *)titleM{
+    if (_titleM == nil) {
+        _titleM = [[NSMutableArray alloc] init];
+    }
+    return _titleM;
+}
+
 
 -(UILabel *)titleLabel{
     if (_titleLabel == nil) {
+        
+        UIView *v = [[UIView alloc] init];
+        v.backgroundColor = [UIColor colorWithRed:220 green:220 blue:220 alpha:0.5];
+        [self addSubview:v];
+        NSLayoutConstraint *vLeft = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
+        NSLayoutConstraint *vRight = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
+        NSLayoutConstraint *vBottom = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+        v.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        
         UILabel *titleLabel = [[UILabel alloc] init];
-        [self addSubview:titleLabel];
+        [v addSubview:titleLabel];
         _titleLabel = titleLabel;
-       
+        titleLabel.textColor = [UIColor whiteColor];
         NSLayoutConstraint *horizontal = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
         NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
         self.titleLBottom = bottom;
-        horizontal.active = YES;
-        bottom.active = YES;
+        NSLayoutConstraint *vHeight = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+        
+        [NSLayoutConstraint activateConstraints:@[vLeft, vRight, vBottom, horizontal, bottom, vHeight]];
         titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
     }

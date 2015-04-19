@@ -144,6 +144,7 @@
     self.imgV0.image = [UIImage imageNamed:self.images[(self.currentI - 1 + self.images.count) % self.images.count]];
     self.imgV1.image = [UIImage imageNamed:self.images[self.currentI]];
     self.imgV2.image = [UIImage imageNamed:self.images[(self.currentI + 1 + self.images.count) % self.images.count]];
+    self.titleLabel.text = self.titles[self.currentI];
 }
 
 
