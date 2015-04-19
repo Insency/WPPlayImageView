@@ -20,7 +20,6 @@
 
 @implementation WPPlayImageView
 
-
 +(instancetype)playImageViewType:(PlayImageViewType)type{
     WPPlayImageView *PIV;
     switch (type) {
@@ -34,7 +33,6 @@
             break;
     }
     PIV.clipsToBounds = YES;
-    PIV.type = type;
     return PIV;
 }
 

@@ -32,9 +32,6 @@ typedef void (^touchUpInsideCallBack)();
 @property(nonatomic, assign)double duration;
 /** 轮播的方向 */
 @property(nonatomic, assign)PlayImageViewDirection direction;
-/** 类型 */
-@property(nonatomic, assign)PlayImageViewType type;
-
 
 @property(nonatomic, strong)UIColor *titleColor;
 @property(nonatomic, strong)UIColor *titleBackGroundColor;
@@ -42,7 +39,7 @@ typedef void (^touchUpInsideCallBack)();
 
 
 @property(nonatomic, strong)NSArray *titles;
-///////  回调的集合
+///  回调的集合
 @property(nonatomic, strong)NSArray *callBacks;
 
 ///  快速创建方法
