@@ -36,7 +36,6 @@ typedef void (^touchUpInsideCallBack)();
 @property(nonatomic, assign)PlayImageViewType type;
 
 
-@property(weak, nonatomic) UILabel *titleLabel;
 @property(nonatomic, strong)UIColor *titleColor;
 @property(nonatomic, strong)UIColor *titleBackGroundColor;
 @property(nonatomic, strong)UIFont *titleFont;

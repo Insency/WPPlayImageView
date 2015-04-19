@@ -11,8 +11,6 @@
 #import "WPSlidePalyImageView.h"
 @interface WPPlayImageView()
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLBottom;
-
 @property(nonatomic, strong)NSMutableArray *imagesM;
 @property(nonatomic, strong)NSMutableArray *callBackM;
 @property(nonatomic, strong)NSMutableArray *titleM;
@@ -35,6 +33,7 @@
         default:
             break;
     }
+    PIV.clipsToBounds = YES;
     PIV.type = type;
     return PIV;
 }
@@ -113,43 +112,6 @@
     }
     return _titleM;
 }
-
-
--(UILabel *)titleLabel{
-    if (_titleLabel == nil) {
-        
-        UIView *v = [[UIView alloc] init];
-        v.backgroundColor = [UIColor colorWithRed:220 green:220 blue:220 alpha:0.5];
-        [self addSubview:v];
-        NSLayoutConstraint *vLeft = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
-        NSLayoutConstraint *vRight = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
-        NSLayoutConstraint *vBottom = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
-        v.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        
-        UILabel *titleLabel = [[UILabel alloc] init];
-        [v addSubview:titleLabel];
-        _titleLabel = titleLabel;
-        titleLabel.textColor = [UIColor whiteColor];
-        NSLayoutConstraint *horizontal = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
-        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
-        self.titleLBottom = bottom;
-        NSLayoutConstraint *vHeight = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
-        
-        [NSLayoutConstraint activateConstraints:@[vLeft, vRight, vBottom, horizontal, bottom, vHeight]];
-        titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        
-    }
-    return _titleLabel;
-}
-
-
-#pragma mark - 设置 title 样式
--(void)setTitle:(NSString *)title{
-    title = title;
-    self.titleLabel.text = title;
-}
-
 
 
 @end

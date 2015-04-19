@@ -72,8 +72,7 @@
     WPExampleSection *ES = self.exams[indexPath.section];
     WPExampleRow *ER = ES.rowModels[indexPath.row];
     vc.model = ER;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

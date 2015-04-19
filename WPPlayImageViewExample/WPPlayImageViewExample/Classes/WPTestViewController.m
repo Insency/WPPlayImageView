@@ -49,9 +49,6 @@
     [v addImage:@"03" title:@"我是第03张图片" touchCallBack:^{
         NSLog(@"点击了第01张图片");
     }];
-    [v addImage:@"03" title:@"我是第03张图片" touchCallBack:^{
-        NSLog(@"点击了第03张图片");
-    }];
     [v addImage:@"04" title:@"我是第04张图片" touchCallBack:^{
         NSLog(@"点击了第04张图片");
     }];

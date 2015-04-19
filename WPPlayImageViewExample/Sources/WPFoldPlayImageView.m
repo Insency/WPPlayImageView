@@ -12,10 +12,12 @@
 @property(nonatomic, weak) UIImageView *imgV0;
 @property(nonatomic, weak) UIImageView *imgV1;
 @property(nonatomic, weak) UIImageView *imgV2;
+@property(nonatomic, strong)UILabel *titleLabel;
 @property(nonatomic, weak)UIView *cover;
 
 @property (weak, nonatomic) NSLayoutConstraint *image1Right;
 @property (weak, nonatomic) NSLayoutConstraint *image1Left;
+@property (weak, nonatomic) NSLayoutConstraint *titleBottom;
 
 
 @property(nonatomic, assign)int currentI;
@@ -97,16 +99,23 @@
 }
 
 -(void)foldAnimatedScroll:(BOOL) isPan{
+    self.titleBottom.constant = 0;
     [UIView animateWithDuration:self.duration animations:^{
         [self layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [self fillImage];
-        [self defaultSettingConstraints];
-        if (isPan) {
-            [self startTimer];
-        }
+        self.titleLabel.text = self.titles[self.currentI];
+        self.titleBottom.constant = -self.titleLabel.bounds.size.height;
+        [UIView animateWithDuration:self.duration animations:^{
+            [self layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            [self defaultSettingConstraints];
+            [self fillImage];
+            if (isPan) {
+                [self startTimer];
+            }
+        }];
     }];
-    
+
 }
 
 -(void)foldTimeFireMethod{
@@ -144,16 +153,16 @@
     self.imgV0.image = [UIImage imageNamed:self.images[(self.currentI - 1 + self.images.count) % self.images.count]];
     self.imgV1.image = [UIImage imageNamed:self.images[self.currentI]];
     self.imgV2.image = [UIImage imageNamed:self.images[(self.currentI + 1 + self.images.count) % self.images.count]];
-    self.titleLabel.text = self.titles[self.currentI];
+    
 }
 
 
 -(void)willMoveToWindow:(UIWindow *)newWindow{
     self.cover.frame = self.bounds;
     self.cover.backgroundColor = [UIColor clearColor];
-//    [self bringSubviewToFront:self.cover];
     [self fillImage];
     [self startTimer];
+    self.titleLabel.text = self.titles[self.currentI];
 }
 -(void)removeFromSuperview{
     [self.timer invalidate];
@@ -233,5 +242,43 @@
     
 }
 
+
+-(UILabel *)titleLabel{
+    if (_titleLabel == nil) {
+        
+        UIView *v = [[UIView alloc] init];
+        v.backgroundColor = [UIColor colorWithRed:220 green:220 blue:220 alpha:0.5];
+        [self addSubview:v];
+        v.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        UILabel *titleLabel = [[UILabel alloc] init];
+        [v addSubview:titleLabel];
+        _titleLabel = titleLabel;
+        titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        if (self.titleColor != nil) {
+            titleLabel.textColor = self.titleColor;
+        }
+        if (self.titleFont != nil) {
+            titleLabel.font = self.titleFont;
+        }
+        if (self.titleBackGroundColor != nil) {
+            v.backgroundColor = self.titleBackGroundColor;
+        }
+        
+        NSLayoutConstraint *vLeft = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0];
+        NSLayoutConstraint *vRight = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0];
+        NSLayoutConstraint *vTop = [NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:v.superview attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+        NSLayoutConstraint *horizontal = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+        self.titleBottom = vTop;
+        NSLayoutConstraint *vHeight = [NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:titleLabel.superview attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+        
+        [NSLayoutConstraint activateConstraints:@[vLeft, vRight, vTop, horizontal, bottom, vHeight]];
+        
+        
+    }
+    return _titleLabel;
+}
 
 @end
