@@ -1,15 +1,19 @@
 //
-//  ViewController.h
+//  WPExampleSection.m
 //  WPPlayImageViewExample
 //
 //  Created by iyouwp on 15/4/19.
 //  Copyright (c) 2015年 iyouwp. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "WPExampleSection.h"
 
-@interface ViewController : UIViewController
+
+@implementation WPExampleSection
+
+
+
+
 
 
 @end
-
